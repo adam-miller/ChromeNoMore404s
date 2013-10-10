@@ -58,4 +58,4 @@ function WM_loadBanner(response) {
 
 
 
-document.body.style.backgroundColor="#DADADA"
+//document.body.style.backgroundColor="#DADADA"
