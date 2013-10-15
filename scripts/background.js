@@ -22,12 +22,15 @@ chrome.webRequest.onCompleted.addListener(function(details) {
 					if(tab.status=="loading") {
 					    chrome.tabs.onUpdated.addListener(function (id, changeInfo, tab) {
 						    if(id==details.tabId && changeInfo.status=="complete")
-							chrome.tabs.executeScript(details.tabId, {file:"content_script.js"});
+							chrome.tabs.insertCSS(details.tabId, {file:"css/content.css"});
+							chrome.tabs.executeScript(details.tabId, {file:"scripts/content_script.js"});
 						    
 						});
 					}
-					else
-					    chrome.tabs.executeScript(details.tabId, {file:"content_script.js"}); 
+					else {
+					    chrome.tabs.insertCSS(details.tabId, {file:"css/content.css"});
+					    chrome.tabs.executeScript(details.tabId, {file:"scripts/content_script.js"}); 
+					}
 					console.log("script should have been executed");
 				    }
 				});

@@ -12,15 +12,16 @@
     "<all_urls>"
   ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["scripts/background.js"],
     "persistent": true
   },
   "web_accessible_resources": [
-    "index.html"
+    "index.html",
+    "images/closeButton.png"
   ],
   "browser_action": {
     "default_title": "No more 404s!",
-    "default_icon": "icon.png",
-    "default_popup": "popup.html"
+    "default_icon": "images/icon.png",
+    "default_popup": "scripts/popup.html"
   }
 }
