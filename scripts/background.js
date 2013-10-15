@@ -9,19 +9,17 @@ chrome.storage.sync.get('isEnabled', function(values){
 
 chrome.webRequest.onCompleted.addListener(function(details) {
 	if(details.statusCode==404 &&details.type=="main_frame" ) {
-	    console.log(details);
 
 	    chrome.tabs.get(details.tabId, function(tab) {
-			if(!tab)
-			    console.log('tab is gone');
-			else {
+			if(tab) {
 			    //Time to run the content script, but only if we are enabled
 			    chrome.storage.sync.get('isEnabled', function(values){
 				    //console.log(values);
 				    if(typeof values.isEnabled === "undefined" || values.isEnabled) {
 					if(tab.status=="loading") {
-					    chrome.tabs.onUpdated.addListener(function (id, changeInfo, tab) {
+					    chrome.tabs.onUpdated.addListener(function executeContentScript (id, changeInfo, tab) {
 						    if(id==details.tabId && changeInfo.status=="complete")
+							chrome.tabs.onUpdated.removeListener(executeContentScript);
 							chrome.tabs.insertCSS(details.tabId, {file:"css/content.css"});
 							chrome.tabs.executeScript(details.tabId, {file:"scripts/content_script.js"});
 						    
@@ -31,10 +29,11 @@ chrome.webRequest.onCompleted.addListener(function(details) {
 					    chrome.tabs.insertCSS(details.tabId, {file:"css/content.css"});
 					    chrome.tabs.executeScript(details.tabId, {file:"scripts/content_script.js"}); 
 					}
-					console.log("script should have been executed");
 				    }
 				});
 			}
+			//else
+			//  console.log("tab is gone");
 
 		    });
 
