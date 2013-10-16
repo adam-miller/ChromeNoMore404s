@@ -111,7 +111,7 @@ function updateBanner(response,currentLocation) {
        response.archived_snapshots.closest.available==true && 
        response.archived_snapshots.closest.status.indexOf("2")==0) {
 
-	document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper";
+	document.querySelector(".IA_banner_wrapper").className="IA_banner IA_banner_wrapper";
 	document.querySelector('.IA_banner_message').innerText="An archived copy of this page is available via the Wayback Machine - ";
 	
 	var link = document.querySelector('a.IA_banner_archive_link');

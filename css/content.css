@@ -1,10 +1,23 @@
-div.IA_banner span.IA_banner a.IA_banner {
+.IA_banner {
       margin: 0;
       padding: 0;
       border: 0;
       font-size: 100%;
       font: inherit;
       vertical-align: baseline;
+      max-width:none;
+}
+
+@media screen,projection { 
+  .IA_banner {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+    max-width:none;
+  }
 }
 .IA_banner_wrapper {
   position:absolute;
@@ -26,9 +39,10 @@ div.IA_banner span.IA_banner a.IA_banner {
 }
 .IA_banner_message {
   padding-left:35px;
+  color:#000029;
 }
-.IA_banner_archive_link {
-  
+a.IA_banner_archive_link {
+  color:#61C; 
 }
 .IA_banner_header {
   display:none;
