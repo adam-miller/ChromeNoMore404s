@@ -32,6 +32,7 @@
   position:relative;
   width:100%;
   background-color:#ececec;
+  background: linear-gradient(#ececec, #e1e1e1);
   margin:0px;
   border-bottom: solid 1px #7A7A7A;
   padding:10px;
