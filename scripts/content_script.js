@@ -75,7 +75,7 @@ function loadBanner(response, currentLocation) {
     //banner.appendChild(header);
 
     var logo = document.createElement("img");
-    logo.src=chrome.extension.getURL("images/icon.png");
+    logo.src=chrome.extension.getURL("images/insetIcon.png");
     logo.className="IA_banner_logo";
     logo.alt="Internet Archive Logo";
     banner.appendChild(logo);

@@ -20,7 +20,8 @@
   "web_accessible_resources": [
     "index.html",
     "images/closeButton.png",
-    "images/icon.png"
+    "images/icon.png",
+    "images/insetIcon.png"
   ],
   "browser_action": {
     "default_title": "No more 404s!",

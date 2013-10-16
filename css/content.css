@@ -25,7 +25,7 @@ div.IA_banner span.IA_banner a.IA_banner {
   font: 15px arial,sans-serif;
 }
 .IA_banner_message {
-  padding-left:30px;
+  padding-left:35px;
 }
 .IA_banner_archive_link {
   
@@ -47,7 +47,7 @@ div.IA_banner span.IA_banner a.IA_banner {
 }
 .IA_banner_logo {
   position:absolute;
-  top:10px;
+  top:3px;
   left:10px;
 }
 .IA_banner_close {
