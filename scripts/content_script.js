@@ -60,19 +60,29 @@ function loadBanner(response, currentLocation) {
 	wrapper.innerHTML="";
 
 
-    wrapper.className="IA_banner_wrapper IA_banner_hidden";
+    wrapper.className="IA_banner IA_banner_wrapper IA_banner_hidden";
     var banner = document.createElement("div");
-    banner.className="IA_banner_content";
+    banner.className="IA_banner IA_banner_content";
     
     var text = document.createElement("span");
     text.innerText="Checking archive.org for availability... ";
-    text.className="IA_banner_message";
-
+    text.className="IA_banner IA_banner_message";
     banner.appendChild(text);
+
+    var header = document.createElement("span");
+    header.innerText="Internet Archive - No More 404s";
+    header.className="IA_banner IA_banner_header";
+    banner.appendChild(header);
+
+    var logo = document.createElement("img");
+    logo.src=chrome.extension.getURL("images/icon.png");
+    logo.className="IA_banner_logo";
+    banner.appendChild(logo);
+
     banner.appendChild(document.createElement("br"));
 
     var newLink = document.createElement("a");
-    newLink.className="IA_banner_archive_link IA_banner_hidden";
+    newLink.className="IA_banner IA_banner_archive_link IA_banner_hidden";
     newLink.innerText="Available on the Wayback Machine";
     
     var closeButton = document.createElement("img");
