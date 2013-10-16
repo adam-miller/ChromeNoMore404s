@@ -1,24 +1,54 @@
+if(chrome.tabs) {
+chrome.tabs.getSelected(null,function(tab){
 
-loadBanner();
+	if(tab.status=="loading") {
+	    chrome.tabs.onUpdated.addListener(function onStatusComplete (id, changeInfo, tab) {
 
-var xhr = new XMLHttpRequest();
-
-xhr.open("GET","http://archive.org/wayback/available?url="+window.location,true);
-xhr.onreadystatechange = function() {
-    if(xhr.readyState == 4) {
-	if(xhr.status==200) {
-	    var resp = JSON.parse(xhr.responseText);
-	    updateBanner(resp);
+		    if(changeInfo.status=="complete") {
+			chrome.tabs.onUpdated.removeListener(onStatusComplete);
+			init();
+		    }
+		});	
 	}
 	else
-	    bannerError();
-    }
+	    init();
+    });
 }
-xhr.send();
+else
+    init();
+
+
+function init() {
+    loadBanner();
+    
+    var xhr = new XMLHttpRequest();
+    var currentLocation = window.location.toString();
+
+    if(currentLocation.indexOf("dnsError.html")>=0 && currentLocation.indexOf("chrome-extension") >=0)
+	currentLocation=window.location.search.slice(1);
+
+
+    xhr.open("GET","http://archive.org/wayback/available?url="+currentLocation,true);
+    xhr.onreadystatechange = function() {
+	if(xhr.readyState == 4) {
+	    if(xhr.status==200) {
+		var resp = JSON.parse(xhr.responseText);
+		updateBanner(resp,currentLocation);
+	    }
+	    else
+		bannerError();
+	}
+    }
+    xhr.send();
+    
+}
 
 
 
-function loadBanner(response) {
+
+
+function loadBanner(response, currentLocation) {
+    
 
     var bodyElement = document.getElementsByTagName("body")[0];
     var wrapper = document.querySelector('.IA_banner_wrapper');
@@ -44,12 +74,9 @@ function loadBanner(response) {
     var newLink = document.createElement("a");
     newLink.className="IA_banner_archive_link IA_banner_hidden";
     newLink.innerText="Available on the Wayback Machine";
-		       //    var oldLink = document.createElement("a");
-		       //    oldLink.href=window.location;
-		       //    oldLink.innerText="(TEST)Original Link";
     
     var closeButton = document.createElement("img");
-    closeButton.src=chrome.extension.getURL("images/closeButton.png");;
+    closeButton.src=chrome.extension.getURL("images/closeButton.png");
     closeButton.className="IA_banner_close";
     closeButton.addEventListener('click',function () {
 
@@ -59,16 +86,13 @@ function loadBanner(response) {
     banner.appendChild(closeButton);
 
     banner.appendChild(newLink);
-		       //banner.appendChild(oldLink);
+
     wrapper.appendChild(banner);
-    setTimeout('document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper"',200);
+    setTimeout(function() {document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper" },200);
     
-
-//banner.setAttribute("style","display: block; position: relative; z-index: 99999; border: 1px solid; color: black; background-color: rgb(255, 255, 224); font-size: 15px; font-family: sans-serif; padding: 5px; ");
-
 }
 
-function updateBanner(response) {
+function updateBanner(response,currentLocation) {
     if(response.archived_snapshots && 
        response.archived_snapshots.closest && 
        response.archived_snapshots.closest.available && 
@@ -77,7 +101,7 @@ function updateBanner(response) {
 
 	document.querySelector('.IA_banner_message').innerText="Last known working copy from "+convertFromTimestamp(response.archived_snapshots.closest.timestamp);
 	var link = document.querySelector('a.IA_banner_archive_link');
-	link.href="http://web.archive.org/web/"+response.archived_snapshots.closest.timestamp+"/"+window.location;
+	link.href="http://web.archive.org/web/"+response.archived_snapshots.closest.timestamp+"/"+currentLocation;
 	link.className="IA_banner_archive_link";
     }
     else {

@@ -9,6 +9,8 @@
     "tabs",
     "webRequest",
     "storage",
+    "http://*/*",
+    "https://*/*",
     "<all_urls>"
   ],
   "background": {
@@ -22,6 +24,6 @@
   "browser_action": {
     "default_title": "No more 404s!",
     "default_icon": "images/icon.png",
-    "default_popup": "popup.html"
+    "default_popup": "html/popup.html"
   }
 }
