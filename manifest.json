@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "No More 404s",
-  "description": "This is a test of no more 404s chrome integration",
+  "name": "Internet Archive 404 Helper",
+  "description": "Reduce annoying 404 pages by automatically checking for an archived copy in the Wayback Machine",
   "version": "1.0",
 
   "permissions": [
