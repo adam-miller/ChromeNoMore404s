@@ -50,6 +50,9 @@ div.IA_banner span.IA_banner a.IA_banner {
   position:absolute;
   top:0px;
   right:0px;
+  padding:2px;
+  width:14px;
+  height:14px;
 }
 .IA_banner_close:hover {
   cursor:pointer;
