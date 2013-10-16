@@ -8,26 +8,30 @@ div.IA_banner span.IA_banner a.IA_banner {
 }
 .IA_banner_wrapper {
   position:absolute;
-  left:50%;
-  margin-left:-150px;
+  left:0px;
   top:0px;
-  width:300px;
-  text-align:center;
+  width:100%;
+  text-align:left;
   z-index:2147483647;
   padding:0px
 }
 .IA_banner_content {
   position:relative;
-  width:300px;
-  background-color:#FFFFE0;
-  margin:10px auto;
-  border: solid 1px #000;
-  padding:15px;
-  padding-top:26px;
-  text-align:center;
+  width:100%;
+  background-color:#ececec;
+  margin:0px;
+  border-bottom: solid 1px #000;
+  padding:10px;
   font: 15px arial,sans-serif;
 }
+.IA_banner_message {
+  padding-left:30px;
+}
+.IA_banner_archive_link {
+  
+}
 .IA_banner_header {
+  display:none;
   position:absolute;
   top:0px;
   left:19px;
@@ -43,23 +47,19 @@ div.IA_banner span.IA_banner a.IA_banner {
 }
 .IA_banner_logo {
   position:absolute;
-  top:0px;
-  left:0px;
+  top:10px;
+  left:10px;
 }
 .IA_banner_close {
   position:absolute;
-  top:0px;
-  right:0px;
-  padding:2px;
-  width:14px;
-  height:14px;
+  top:10px;
+  right:30px;
+  cursor:default;
 }
 .IA_banner_close:hover {
   cursor:pointer;
 }
-.IA_banner_close {
-  cursor:default;
-}
+
 .IA_banner_hidden {
   visibility:hidden;
 }

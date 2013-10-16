@@ -35,8 +35,8 @@ function init() {
 		var resp = JSON.parse(xhr.responseText);
 		updateBanner(resp,currentLocation);
 	    }
-	    else
-		bannerError();
+	    //else
+		//bannerError();
 	}
     }
     xhr.send();
@@ -69,25 +69,27 @@ function loadBanner(response, currentLocation) {
     text.className="IA_banner IA_banner_message";
     banner.appendChild(text);
 
-    var header = document.createElement("span");
-    header.innerText="Internet Archive - No More 404s";
-    header.className="IA_banner IA_banner_header";
-    banner.appendChild(header);
+    //var header = document.createElement("span");
+    //header.innerText="An archived copy of this page is available via the Wayback Machine - ";
+    //header.className="IA_banner IA_banner_header";
+    //banner.appendChild(header);
 
     var logo = document.createElement("img");
     logo.src=chrome.extension.getURL("images/icon.png");
     logo.className="IA_banner_logo";
+    logo.alt="Internet Archive Logo";
     banner.appendChild(logo);
 
-    banner.appendChild(document.createElement("br"));
+    //banner.appendChild(document.createElement("br"));
 
     var newLink = document.createElement("a");
     newLink.className="IA_banner IA_banner_archive_link IA_banner_hidden";
-    newLink.innerText="Available on the Wayback Machine";
+    newLink.innerText="Visit this site as it was captured on ";
     
     var closeButton = document.createElement("img");
     closeButton.src=chrome.extension.getURL("images/closeButton.png");
     closeButton.className="IA_banner_close";
+    closeButton.alt="Close Wayback Machine Link Popup";
     closeButton.addEventListener('click',function () {
 
 	    document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper IA_banner_hidden";
@@ -98,7 +100,7 @@ function loadBanner(response, currentLocation) {
     banner.appendChild(newLink);
 
     wrapper.appendChild(banner);
-    setTimeout(function() {document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper" },200);
+    //setTimeout(function() {document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper" },200);
     
 }
 
@@ -109,10 +111,13 @@ function updateBanner(response,currentLocation) {
        response.archived_snapshots.closest.available==true && 
        response.archived_snapshots.closest.status.indexOf("2")==0) {
 
-	document.querySelector('.IA_banner_message').innerText="Last known working copy from "+convertFromTimestamp(response.archived_snapshots.closest.timestamp);
+	document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper";
+	document.querySelector('.IA_banner_message').innerText="An archived copy of this page is available via the Wayback Machine - ";
+	
 	var link = document.querySelector('a.IA_banner_archive_link');
 	link.href="http://web.archive.org/web/"+response.archived_snapshots.closest.timestamp+"/"+currentLocation;
 	link.className="IA_banner_archive_link";
+	link.innerText = "Visit this site as it was captured on "+convertFromTimestamp(response.archived_snapshots.closest.timestamp);
     }
     else {
 	if(response.archived_snapshots && !response.archived_snapshots.hasOwnProperty('closest') ) {
@@ -123,7 +128,30 @@ function updateBanner(response,currentLocation) {
 }
 
 function convertFromTimestamp(timestamp) {
-    return timestamp.substring(0,4)+"-"+timestamp.substring(4,6)+"-"+timestamp.substring(6,8);
+    var year = timestamp.substring(0,4);
+    var month = timestamp.substring(4,6);
+    var day = timestamp.substring(6,8);
+    var hour = timestamp.substring(8,10);
+    var min = timestamp.substring(10,12);
+    var sec = timestamp.substring(12,14);
+    var datetime = new Date();
+    datetime.setUTCFullYear(year);
+    datetime.setUTCMonth(month);
+    datetime.setUTCDate(day);
+    datetime.setUTCHours(hour);
+    datetime.setUTCMinutes(min);
+    datetime.setUTCSeconds(sec);
+    var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    var dateString = datetime.getDate();
+    dateString+= " " + monthNames[datetime.getMonth()];
+    dateString+= ", " + (1900+datetime.getYear());
+    dateString+= " " + datetime.getHours();
+    dateString+= ":" + datetime.getMinutes();
+    dateString+= ":" + datetime.getSeconds();
+    return dateString; 
+	//datetime.toString("MMM dd,yyyy");
+
+    //return timestamp.substring(0,4)+"-"+timestamp.substring(4,6)+"-"+timestamp.substring(6,8);
 }
 
 function bannerError() {
