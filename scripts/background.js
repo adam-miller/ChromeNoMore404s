@@ -7,7 +7,7 @@ chrome.storage.sync.get('isEnabled', function(values){
     });
 
 chrome.webRequest.onErrorOccurred.addListener(function(details) {
-	if(details.type=="main_frame") {
+	if(details.type=="main_frame" && details.error=="net::ERR_NAME_NOT_RESOLVED") {
 	    chrome.tabs.update(details.tabId, {url: chrome.extension.getURL("html/dnsError.html") +"?"+ details.url});
 	}
 
