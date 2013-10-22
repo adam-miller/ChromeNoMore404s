@@ -22,6 +22,13 @@ chrome.webRequest.onCompleted.addListener(function(details) {
 function executeContentScript(details) {
     chrome.tabs.get(details.tabId, function(tab) {
 	    if(tab) {
+
+		//Don't need to check the availability API if we're on our own site
+		if(getLocation(details.url).hostname.indexOf("archive.org")>=0) {
+		    //console.log("im on archive.org");
+		    return;
+		}
+
 		//Time to run the content script, but only if we are enabled
 		chrome.storage.sync.get('isEnabled', function(values){
 			//console.log(values);
@@ -47,3 +54,8 @@ function executeContentScript(details) {
 	    
 	});
 }
+var getLocation = function(href) {
+    var link = document.createElement("a");
+    link.href=href;
+    return link;
+};

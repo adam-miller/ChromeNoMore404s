@@ -4,6 +4,7 @@
   "name": "Internet Archive 404 Helper",
   "description": "Reduce annoying 404 pages by automatically checking for an archived copy in the Wayback Machine",
   "version": "1.0",
+  "update_url": "http://archive.org/~adam/NoMore404s/updates.xml",
 
   "icons": {
     "16":"images/icon16.png",
