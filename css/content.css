@@ -76,5 +76,5 @@ a.IA_banner_archive_link {
 }
 
 .IA_banner_hidden {
-  visibility:hidden;
+  display:none;
 }

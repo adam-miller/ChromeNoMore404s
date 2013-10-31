@@ -1,16 +1,36 @@
 <html>
 <head>
+  <script type="text/javascript" src="/scripts/jquery-2.0.3.min.js"></script>
+  <script type="text/javascript" src="/scripts/plugin_lib.js"></script>
   <script type="text/javascript" src="/scripts/popup.js"></script>
+  <style>
+    ul {
+      list-style-type:none;
+      padding:none;
+      -webkit-padding-start:0px;
+    }
+    ul li {
+      margin:none;
+    }
+
+  </style>
 </head>
 <body>
   <div style="width:300px">
-    <h3>No More 404s</h3>
-    <p>
-      When you encounter a "404 Page Not Found", this plugin will query archive.org's Wayback Machine and provide a link to the latest known working copy of the URL if it is available.
-    </p>
+    <h3>Internet Archive</h3>
   </div>
   <div>
-  <span><input id="isEnabled" type="checkbox">Enabled</input></span>
+    <ul style="list-style-type:none; margin:none;">
+      <li>
+	<input id="archive_now" type="button" value="Archive this page" />
+      </li>
+      <li>
+	<input id="wm_lookup" type="button" value="Find this page on Wayback" />
+      </li>
+      <li>
+	  <span><input id="isEnabled" type="checkbox">Auto 404-lookup</input></span>
+      </li>
+    </ul>
   </div>
 </body>
 </html>

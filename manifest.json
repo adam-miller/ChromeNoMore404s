@@ -20,7 +20,7 @@
     "<all_urls>"
   ],
   "background": {
-    "scripts": ["scripts/background.js"],
+    "scripts": ["scripts/plugin_lib.js","scripts/background.js"],
     "persistent": true
   },
   "web_accessible_resources": [
