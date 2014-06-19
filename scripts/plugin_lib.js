@@ -47,13 +47,21 @@ function execute_content_script(tab, css, script) {
 function loadBanner() {
  
     var bodyElement = document.getElementsByTagName("body")[0];
+
+    
     var wrapper = document.querySelector('.IA_banner_wrapper');
     if(!wrapper) {
-	wrapper = document.createElement("div");
-	bodyElement.insertBefore(wrapper,bodyElement.childNodes[0]);
+    	wrapper = document.createElement("div");
+    	bodyElement.insertBefore(wrapper,bodyElement.childNodes[0]);
+
+        var buffer = document.createElement("div");
+        buffer.className="IA_banner_buffer";
+        bodyElement.insertBefore(buffer,bodyElement.childNodes[0]);
     }
-    else
-	wrapper.innerHTML="";
+    else {
+	   wrapper.innerHTML="";
+
+    }
 
     wrapper.className="IA_banner IA_banner_wrapper IA_banner_hidden";
     var banner = document.createElement("div");
@@ -81,13 +89,24 @@ function loadBanner() {
     closeButton.alt="Close Wayback Machine Link Popup";
     closeButton.addEventListener('click',function () {
 	    //document.querySelector(".IA_banner_wrapper").className="IA_banner_wrapper IA_banner_hidden";
-	    $(".IA_banner_wrapper").hide();
+	    $(".IA_banner_wrapper, .IA_banner_buffer").hide();
 	    document.querySelector(".IA_banner_archive_link").className="IA_banner_archive_link IA_banner_hidden";
 	},false);
 
     banner.appendChild(closeButton);
     banner.appendChild(newLink);
     wrapper.appendChild(banner);
+
+    $(window).scroll(function(e){ 
+      $el = $('.IA_banner_wrapper'); 
+      if ($(this).scrollTop() > 38 && $el.css('position') != 'fixed'){ 
+        $('.IA_banner_wrapper').css({'position': 'fixed', 'top': '0px'}); 
+      }
+      if ($(this).scrollTop() < 38 && $el.css('position') == 'fixed')
+      {
+        $('.IA_banner_wrapper').css({'position': 'absolute', 'top': '0px'}); 
+      } 
+    });
     
 }
 function updateBannerSuccess(response,url) {
@@ -98,18 +117,18 @@ function updateBannerSuccess(response,url) {
     link.innerText = "Visit this site as it was captured on "+convertFromTimestamp(response.archived_snapshots.closest.timestamp);
 
     link.className="IA_banner_archive_link";
-    $(".IA_banner_wrapper").slideDown();
+    $(".IA_banner_wrapper, .IA_banner_buffer").slideDown();
     //document.querySelector(".IA_banner_wrapper").className="IA_banner IA_banner_wrapper";
 }    
 function updateBannerFailure(response,url) {
     document.querySelector('.IA_banner_message').innerText="No copy found on the wayback machine";
     //document.querySelector(".IA_banner_wrapper").className="IA_banner IA_banner_wrapper";
-    $(".IA_banner_wrapper").slideDown();
+    $(".IA_banner_wrapper, .IA_banner_buffer").slideDown();
 }
 function updateBannerError() {
     document.querySelector('.IA_banner_message').innerText="Error accessing the wayback machine. Please try again later";
     //document.querySelector(".IA_banner_wrapper").className="IA_banner IA_banner_wrapper";
-    $(".IA_banner_wrapper").slideDown();
+    $(".IA_banner_wrapper, .IA_banner_buffer").slideDown();
 }
 
 function convertFromTimestamp(timestamp) {
@@ -119,20 +138,13 @@ function convertFromTimestamp(timestamp) {
     var hour = timestamp.substring(8,10);
     var min = timestamp.substring(10,12);
     var sec = timestamp.substring(12,14);
-    var datetime = new Date();
-    datetime.setUTCFullYear(year);
-    datetime.setUTCMonth(month);
-    datetime.setUTCDate(day);
-    datetime.setUTCHours(hour);
-    datetime.setUTCMinutes(min);
-    datetime.setUTCSeconds(sec);
     var monthNames = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    var dateString = datetime.getDate();
-    dateString+= " " + monthNames[datetime.getMonth()+1];
-    dateString+= ", " + (1900+datetime.getYear());
-    dateString+= " " + datetime.getHours();
-    dateString+= ":" + datetime.getMinutes();
-    dateString+= ":" + datetime.getSeconds();
+    var dateString=day;// = datetime.getDate();
+    dateString+= " " + monthNames[parseInt(month)-1];
+    dateString+= ", " +year;
+    dateString+= " " + hour;
+    dateString+= ":" + min;
+    dateString+= ":" + sec;
     return dateString; 
 }
 

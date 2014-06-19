@@ -27,7 +27,9 @@
     "index.html",
     "images/closeButton.png",
     "images/icon.png",
-    "images/insetIcon.png"
+    "images/insetIcon.png",
+    "images/icon128.png",
+    "images/ajax-loader.gif"
   ],
   "browser_action": {
     "default_title": "No more 404s!",

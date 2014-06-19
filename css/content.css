@@ -19,6 +19,10 @@
     max-width:none;
   }
 }
+.IA_banner_buffer {
+  height:38px;
+  display:none;
+}
 .IA_banner_wrapper {
   position:absolute;
   left:0px;
